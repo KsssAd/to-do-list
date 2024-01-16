@@ -1,0 +1,16 @@
+<div class="header" *ngIf="authService.isLoggedIn">
+  <a class="neumorph-logo header-logo" [routerLink]="['/']">TO-DO LIST</a>
+  <!--<ul class="navbar-nav flex-grow">
+    <li [routerLinkActive]="['link-active']"
+        [routerLinkActiveOptions]="{ exact: true }">
+      <a [routerLink]="['/']">Home</a>
+    </li>
+    <li [routerLinkActive]="['link-active']">
+      <a [routerLink]="['/fetch-data']">Fetch data</a>
+    </li>
+    <li>
+      
+    </li>
+  </ul>-->
+  <button class="neumorph-btn" (click)="router.navigateByUrl('/login')">Выход</button>
+</div>
