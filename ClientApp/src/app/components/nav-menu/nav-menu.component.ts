@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -8,7 +8,11 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  isExpanded: boolean = false;
+  windowWidth: number = window.innerWidth;
+  opened: boolean = false;
+
+  @Output() toggle = new EventEmitter<boolean>();
 
   constructor(
     public authService: AuthService,
@@ -19,7 +23,12 @@ export class NavMenuComponent {
     this.isExpanded = false;
   }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  onToggleSidebar() {
+    this.opened = !this.opened;
+    this.toggle.emit(this.opened);
+  }
+
+  onResize(event: any) {
+    this.windowWidth = event.target.innerWidth;
   }
 }

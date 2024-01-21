@@ -1,16 +1,48 @@
-<div class="header" *ngIf="authService.isLoggedIn">
-  <a class="neumorph-logo header-logo" [routerLink]="['/']">TO-DO LIST</a>
-  <!--<ul class="navbar-nav flex-grow">
-    <li [routerLinkActive]="['link-active']"
-        [routerLinkActiveOptions]="{ exact: true }">
-      <a [routerLink]="['/']">Home</a>
+<div class="header" *ngIf="authService.isLoggedIn" (window:resize)="onResize($event)">
+  <a class="neumorph-logo header-logo" routerLink="/"> TO-DO LIST</a>
+  <ul class="navbar" *ngIf="windowWidth > 1160 ? true : false">
+    <li class="navbar-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <i class="fa-solid fa-home big-neumorph-icon"></i>
+      <a class="nav-link title-text" routerLink="/">Главная</a>
     </li>
-    <li [routerLinkActive]="['link-active']">
-      <a [routerLink]="['/fetch-data']">Fetch data</a>
+    <li class="navbar-item" routerLinkActive="active">
+      <i class="fa-solid fa-calendar big-neumorph-icon"></i>
+      <a class="nav-link title-text" routerLink="/">Календарь</a>
     </li>
-    <li>
-      
+    <li class="navbar-item" routerLinkActive="active">
+      <i class="fa-solid fa-heart big-neumorph-icon"></i>
+      <a class="nav-link title-text" routerLink="/">Избранное</a>
     </li>
-  </ul>-->
-  <button class="neumorph-btn" (click)="router.navigateByUrl('/login')">Выход</button>
+    <li class="navbar-item">
+      <i class="fa-solid fa-user mr-1 big-neumorph-icon"></i>
+      <span class="title-text mr-3">login_name</span>
+      <button class="neumorph-btn sm-neumorph-btn" (click)="router.navigateByUrl('/login')">Выход</button>
+    </li>
+  </ul>
+
+  <div *ngIf="windowWidth < 1160 ? true : false" (click)="onToggleSidebar()">
+    <i class='slide-bar-icon fa ' [ngClass]="opened ? 'fa-close' : 'fa-bars'"></i>
+  </div>
+</div>
+
+<div *ngIf="windowWidth < 1160 && authService.isLoggedIn ? true : false" class="l-navbar" [ngClass]="opened ? 'showNav' : ''">
+  <ul>
+    <li class="navbar-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <i class="fa-solid fa-home big-neumorph-icon"></i>
+      <a class="nav-link title-text" routerLink="/">Главная</a>
+    </li>
+    <li class="navbar-item" routerLinkActive="active">
+      <i class="fa-solid fa-calendar big-neumorph-icon"></i>
+      <a class="nav-link title-text" routerLink="/">Календарь</a>
+    </li>
+    <li class="navbar-item" routerLinkActive="active">
+      <i class="fa-solid fa-heart big-neumorph-icon"></i>
+      <a class="nav-link title-text" routerLink="/">Избранное</a>
+    </li>
+    <li class="navbar-item">
+      <i class="fa-solid fa-user mr-1 big-neumorph-icon"></i>
+      <span class="title-text mr-3">login_name</span>
+      <button class="neumorph-btn sm-neumorph-btn" (click)="router.navigateByUrl('/login')">Выход</button>
+    </li>
+  </ul>
 </div>

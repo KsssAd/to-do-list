@@ -1,18 +1,40 @@
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  width: 50%;
+  margin: 0;
+  align-content: center;
+  transition: 2s;
 }
 
-html {
-  font-size: 14px;
+.navbar-item {
+  display: flex;
+  align-items: center;
 }
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
+
+.nav-link {
+  transition: 1s;
+}
+
+  .nav-link:hover {
+    letter-spacing: 0.17em;
+    color: var(--link-hover-color);
   }
+
+.big-neumorph-icon {
+  color: var(--bg-color);
+  text-shadow: var(--outset-shadow-default);
+  font-size: xx-large;
+  -webkit-text-stroke: 1px var(--stroke-color);
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+.slide-bar-icon {
+  color: var(--text-color);
+}
+
+@media (max-width: 1600px) {
+  .navbar {
+     width: 70%;
+  }
 }
