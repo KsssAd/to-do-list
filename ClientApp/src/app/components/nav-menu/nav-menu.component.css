@@ -13,6 +13,12 @@
   align-items: center;
 }
 
+.v-navbar-item {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .nav-link {
   transition: 1s;
 }
@@ -22,15 +28,23 @@
     color: var(--link-hover-color);
   }
 
-.big-neumorph-icon {
-  color: var(--bg-color);
-  text-shadow: var(--outset-shadow-default);
-  font-size: xx-large;
-  -webkit-text-stroke: 1px var(--stroke-color);
-}
+
 
 .slide-bar-icon {
   color: var(--text-color);
+  font-size: x-large;
+  cursor: pointer;
+}
+
+.slide-bar-div {
+  display: flex;
+  align-items: center;
+  margin-right: -1.5em;
+}
+
+.v-user-name {
+  transform: rotate(90deg);
+  margin-block: 2.5em;
 }
 
 @media (max-width: 1600px) {

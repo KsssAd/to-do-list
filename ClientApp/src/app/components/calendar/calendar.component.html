@@ -1,0 +1,23 @@
+<div class="calendar-panels">
+  <div class="calendar-container">
+    <div class="calendar-header-container mb-2">
+      <i (click)="prevMonth()" class="fa-solid fa-caret-left big-neumorph-icon"></i>
+      <div class="month-name">
+        <label class="neumorph-logo">{{monthName}}</label>
+        <label class="secondary-text">{{monthName}}, {{selectedMonth.getFullYear()}}</label>
+      </div>
+      <i (click)="nextMonth()" class="fa-solid fa-caret-right big-neumorph-icon"></i>
+    </div>
+
+    <div class="calendar">
+      <label *ngFor="let dayName of weekdayNames" class="title-text weekday">{{dayName}}</label>
+      <button *ngFor="let day of daysInMonth" class="neumorph-btn calendar-day" [ngClass]="isToday(day.date) ? 'today' : ''" [disabled]="!day.isCurrMonth">
+        {{day.date}}
+      </button>
+    </div>
+  </div>
+
+  <div class="list-panel">
+    test
+  </div>
+</div>

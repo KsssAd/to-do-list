@@ -7,7 +7,7 @@
     </li>
     <li class="navbar-item" routerLinkActive="active">
       <i class="fa-solid fa-calendar big-neumorph-icon"></i>
-      <a class="nav-link title-text" routerLink="/">Календарь</a>
+      <a class="nav-link title-text" routerLink="/calendar">Календарь</a>
     </li>
     <li class="navbar-item" routerLinkActive="active">
       <i class="fa-solid fa-heart big-neumorph-icon"></i>
@@ -20,29 +20,28 @@
     </li>
   </ul>
 
-  <div *ngIf="windowWidth < 1160 ? true : false" (click)="onToggleSidebar()">
+  <div *ngIf="windowWidth < 1160 ? true : false" (click)="onToggleSidebar()" class="slide-bar-div">
     <i class='slide-bar-icon fa ' [ngClass]="opened ? 'fa-close' : 'fa-bars'"></i>
   </div>
 </div>
 
-<div *ngIf="windowWidth < 1160 && authService.isLoggedIn ? true : false" class="l-navbar" [ngClass]="opened ? 'showNav' : ''">
-  <ul>
-    <li class="navbar-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      <i class="fa-solid fa-home big-neumorph-icon"></i>
-      <a class="nav-link title-text" routerLink="/">Главная</a>
-    </li>
-    <li class="navbar-item" routerLinkActive="active">
-      <i class="fa-solid fa-calendar big-neumorph-icon"></i>
-      <a class="nav-link title-text" routerLink="/">Календарь</a>
-    </li>
-    <li class="navbar-item" routerLinkActive="active">
-      <i class="fa-solid fa-heart big-neumorph-icon"></i>
-      <a class="nav-link title-text" routerLink="/">Избранное</a>
-    </li>
-    <li class="navbar-item">
-      <i class="fa-solid fa-user mr-1 big-neumorph-icon"></i>
-      <span class="title-text mr-3">login_name</span>
-      <button class="neumorph-btn sm-neumorph-btn" (click)="router.navigateByUrl('/login')">Выход</button>
-    </li>
-  </ul>
+<div *ngIf="windowWidth < 1160 && authService.isLoggedIn ? true : false" class="neumorph-card r-navbar" [ngClass]="opened ? 'showNav' : ''">
+  <div style="display: flex; flex-direction: column;">
+    <div class="v-navbar-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link title-text" routerLink="/" title="Главная"><i class="fa-solid fa-home big-neumorph-icon"></i></a>
+    </div>
+    <div class="v-navbar-item" routerLinkActive="active">
+      <a class="nav-link title-text" routerLink="/calendar" title="Календарь"><i class="fa-solid fa-calendar big-neumorph-icon"></i></a>
+    </div>
+    <div class="v-navbar-item" routerLinkActive="active">
+      <a class="nav-link title-text" routerLink="/" title="Избранное"><i class="fa-solid fa-heart big-neumorph-icon"></i></a>
+    </div>
+    <hr/>
+    <div class="v-navbar-item">
+      <span class="title-text v-user-name">login_name</span>
+      <button class="neumorph-btn sm-neumorph-btn" title="Выход" (click)="router.navigateByUrl('/login')">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+  </div>
 </div>
