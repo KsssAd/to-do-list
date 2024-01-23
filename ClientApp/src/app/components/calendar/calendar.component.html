@@ -1,6 +1,11 @@
+<dialog #listCard>
+  <list-card [todoList]="currTodoList" (close)="listCard.close()">
+  </list-card>
+</dialog>
+
 <div class="calendar-panels">
-  <div class="calendar-container">
-    <div class="calendar-header-container mb-2">
+  <div class="calendar-panel">
+    <div class="calendar-header-container">
       <i (click)="prevMonth()" class="fa-solid fa-caret-left big-neumorph-icon"></i>
       <div class="month-name">
         <label class="neumorph-logo">{{monthName}}</label>
@@ -11,13 +16,22 @@
 
     <div class="calendar">
       <label *ngFor="let dayName of weekdayNames" class="title-text weekday">{{dayName}}</label>
-      <button *ngFor="let day of daysInMonth" class="neumorph-btn calendar-day" [ngClass]="isToday(day.date) ? 'today' : ''" [disabled]="!day.isCurrMonth">
+      <button (click)="dateClick(day.date)" *ngFor="let day of daysInMonth" class="neumorph-btn calendar-day" [ngClass]="isToday(day.date) ? 'today' : ''" [disabled]="!day.isCurrMonth">
         {{day.date}}
       </button>
     </div>
   </div>
 
   <div class="list-panel">
-    test
+    <div class="neumorph-card" *ngIf="todoList.length !== 0">
+      <div class="neumorph-list-card" *ngFor="let item of todoList">
+        <button (click)="showTodoListModal(item); listCard.showModal()">Show dialog</button>
+      </div>
+    </div>
+
+    <div *ngIf="todoList.length === 0" class="null-day neumorph-card">
+      <label class="simple-text mb-2">На дату <label class="title-text"> {{selectedDate.toLocaleDateString()}} </label> отсутствуют списки дел</label>
+      <button class="neumorph-btn add-btn-cal"><i class="fa-regular fa-square-plus"></i></button>
+    </div>
   </div>
 </div>

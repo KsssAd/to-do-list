@@ -9,6 +9,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { ListCardComponent } from './components/list-card/list-card.component';
 
 import { AuthService } from './services/auth.service'
 
@@ -24,7 +25,8 @@ const routes: Routes = [
     NavMenuComponent,
     HomeComponent,
     LoginComponent,
-    CalendarComponent
+    CalendarComponent,
+    ListCardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

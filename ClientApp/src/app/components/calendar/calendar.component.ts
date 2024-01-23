@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Day } from '../../models/calendar.model';
+import { ListItem, TodoList } from '../../models/to-do-list.model';
 
 @Component({
   selector: 'calendar',
@@ -12,6 +13,9 @@ export class CalendarComponent {
   public weekdayNames: string[] = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   public today = new Date();
   public selectedMonth = this.today;
+  public selectedDate = this.today;
+  public todoList: TodoList[] = [];
+  public currTodoList: TodoList = new TodoList();
 
   constructor(
 
@@ -19,6 +23,7 @@ export class CalendarComponent {
 
   ngOnInit() {
     this.loadCalendar(this.today);
+    this.dateClick(this.today.getDate());
   }
 
   nextMonth() {
@@ -87,5 +92,32 @@ export class CalendarComponent {
 
   getLastDay(date: Date, lastDay: number): Date {
     return new Date(date.getFullYear(), date.getMonth(), lastDay);
+  }
+
+  dateClick(date: number) {
+    this.selectedDate = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth(), date);
+
+    let te = new TodoList;
+    let item = new ListItem;
+    item = { id: 1, text: "test", isReady: true };
+    let test = [item, item, item];
+
+    te = {
+      name: "TEST",
+      isFavorite: true,
+      date: this.today,
+      tag: "work",
+      readyPer: 80,
+      list: test
+    }
+
+    this.todoList.push(te);
+    this.todoList.push(te);
+  }
+
+  showTodoListModal(todoList: TodoList) {
+    this.todoList = [];
+
+    this.currTodoList = todoList;
   }
 }

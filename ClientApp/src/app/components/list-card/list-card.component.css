@@ -1,0 +1,27 @@
+.progress-container {
+  width: 100%;
+  border-radius: 50px;
+  margin-inline: 0 !important;
+}
+
+.progerss-line {
+  background: var(--bg-color);
+  display: flex;
+  border-radius: 50px;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--inset-shadow-default);
+  padding-inline: 0.5em;
+}
+
+.list-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.list {
+  height: 50vh;
+  overflow: auto;
+}

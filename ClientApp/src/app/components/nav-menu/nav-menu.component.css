@@ -28,7 +28,10 @@
     color: var(--link-hover-color);
   }
 
-
+  .nav-link:focus {
+    letter-spacing: 0.17em;
+    color: var(--link-hover-color);
+  }
 
 .slide-bar-icon {
   color: var(--text-color);

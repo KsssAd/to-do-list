@@ -1,0 +1,27 @@
+<div>
+  <div class="list-card-header">
+    <i [ngClass]="todoList.isFavorite ? 'fa-solid fa-heart fa-beat big-neumorph-icon' : 'fa-solid fa-heart big-neumorph-icon'"></i>
+    <label class="title-text">{{todoList.name}}</label>
+    <i (click)="closeForm()" class="fa-solid fa-xmark close-icon"></i>
+  </div>
+
+  <div class="list-card-header">
+    <label class="title-text">Дата: <label class="simple-text">{{todoList.date.toLocaleDateString()}}</label> <i class="fa-solid fa-calendar-check"></i></label>
+    <div class="neumorph-card">{{todoList.tag}}</div>
+  </div>
+
+  <div class="list">
+    <div *ngFor="let list of todoList.list" class="neumorph-list-card">
+      <input type="checkbox" [checked]="list.isReady" class="neumorph-input" />
+      <label [ngClass]="list.isReady ? 'crossed-simple-text' : 'simple-text'">{{list.text}}</label>
+    </div>
+  </div>
+
+  <label class="title-text">Процент выполнения:</label>
+  <div class="progress-container neumorph-card">
+    <div class="progerss-line" [style.width.%]="todoList.readyPer">
+      <label class="title-text">{{todoList.readyPer}}%</label>
+      <i class="fa-solid fa-person-running fa-fade" style="color: var(--secondary-text-color)"></i>
+    </div>
+  </div>
+</div>
