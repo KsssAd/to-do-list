@@ -21,7 +21,15 @@
   margin-bottom: 0.5em;
 }
 
+.list-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+  margin-inline: 1.2em;
+}
+
 .list {
-  height: 50vh;
+  height: 22em;
   overflow: auto;
 }

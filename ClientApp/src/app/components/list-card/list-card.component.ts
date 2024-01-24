@@ -7,7 +7,7 @@ import { ListItem, TodoList } from '../../models/to-do-list.model';
   styleUrls: ['./list-card.component.css']
 })
 export class ListCardComponent {
-  @Input() public todoList: TodoList = new TodoList();
+  @Input() public todoList: TodoList = new TodoList
   @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor() {
@@ -18,4 +18,14 @@ export class ListCardComponent {
     this.close.emit(); 
   }
 
+  changeCheckbox(item: ListItem) {
+   
+  }
+
+  deleteList() {
+
+    //TODO !!!!!!!!!!!!!!!!!!
+
+    this.closeForm();
+  }
 }

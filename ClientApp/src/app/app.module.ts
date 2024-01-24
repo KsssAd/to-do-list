@@ -10,6 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ListCardComponent } from './components/list-card/list-card.component';
+import { AddEditListComponent } from './components/add-edit-list/add-edit-list.component';
 
 import { AuthService } from './services/auth.service'
 
@@ -26,7 +27,8 @@ const routes: Routes = [
     HomeComponent,
     LoginComponent,
     CalendarComponent,
-    ListCardComponent
+    ListCardComponent,
+    AddEditListComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

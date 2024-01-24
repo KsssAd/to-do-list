@@ -1,5 +1,6 @@
-<dialog #listCard>
-  <list-card [todoList]="currTodoList" (close)="listCard.close()">
+<dialog #listCard class="dialog-card">
+  <list-card [todoList]="currTodoList"
+             (close)="listCard.close(); dateClick(today.getDate());">
   </list-card>
 </dialog>
 
@@ -23,13 +24,23 @@
   </div>
 
   <div class="list-panel">
-    <div class="neumorph-card" *ngIf="todoList.length !== 0">
-      <div class="neumorph-list-card" *ngFor="let item of todoList">
-        <button (click)="showTodoListModal(item); listCard.showModal()">Show dialog</button>
+    <div *ngIf="todoList.length !== 0" class="neumorph-card h-100">
+      <label class="title-text">Списки на {{selectedDate.toLocaleDateString()}}:</label>
+      <div *ngFor="let item of todoList" style="display: flex; align-items: center;">
+        <i *ngIf="item.isFavorite" class="fa-solid fa-heart big-neumorph-icon me-2" title="Избранное" style="font-size: x-large;"></i>
+
+        <div class="neumorph-list-card mx-0 w-100">
+          <a (click)="showTodoListModal(item); listCard.showModal()" title="{{item.name}}" class="nav-link title-text list-name mx-0">{{item.name}}</a>
+          <label class="title-text">
+            <i class="fa-solid fa-tag me-1"></i>
+            <label class="simple-text">{{item.tag}}</label>
+          </label>
+          <label class="simple-text">{{item.readyPer}}%</label>
+        </div>
       </div>
     </div>
 
-    <div *ngIf="todoList.length === 0" class="null-day neumorph-card">
+    <div *ngIf="todoList.length === 0" class="null-day neumorph-card h-100">
       <label class="simple-text mb-2">На дату <label class="title-text"> {{selectedDate.toLocaleDateString()}} </label> отсутствуют списки дел</label>
       <button class="neumorph-btn add-btn-cal"><i class="fa-regular fa-square-plus"></i></button>
     </div>

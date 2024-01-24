@@ -1,22 +1,49 @@
-<div>
-  <div class="list-card-header">
-    <i [ngClass]="todoList.isFavorite ? 'fa-solid fa-heart fa-beat big-neumorph-icon' : 'fa-solid fa-heart big-neumorph-icon'"></i>
-    <label class="title-text">{{todoList.name}}</label>
-    <i (click)="closeForm()" class="fa-solid fa-xmark close-icon"></i>
+<dialog #delete>
+  <label class="title-text">Вы действительно хотите удалить список {{todoList.name}}?</label>
+  <div class="d-flex justify-content-around mt-1">
+    <button (click)="delete.close()" class="neumorph-btn sm-neumorph-btn my-0">Нет</button>
+    <button (click)="deleteList(); delete.close()" class="neumorph-btn sm-neumorph-btn my-0">Да</button>
   </div>
+</dialog>
 
-  <div class="list-card-header">
-    <label class="title-text">Дата: <label class="simple-text">{{todoList.date.toLocaleDateString()}}</label> <i class="fa-solid fa-calendar-check"></i></label>
-    <div class="neumorph-card">{{todoList.tag}}</div>
-  </div>
+<dialog #edit>
+  <add-edit-list [todoList]="todoList"
+                 [isEdit]="true"
+                 (close)="edit.close();">
+  </add-edit-list>
+</dialog>
 
-  <div class="list">
-    <div *ngFor="let list of todoList.list" class="neumorph-list-card">
-      <input type="checkbox" [checked]="list.isReady" class="neumorph-input" />
-      <label [ngClass]="list.isReady ? 'crossed-simple-text' : 'simple-text'">{{list.text}}</label>
+<div class="list-card-header">
+  <i [ngClass]="todoList.isFavorite ? 'fa-solid fa-heart fa-beat big-neumorph-icon' : ''"></i>
+  <label class="title-text">{{todoList.name}}</label>
+  <i (click)="closeForm()" class="fa-solid fa-xmark close-icon"></i>
+</div>
+
+<hr />
+
+<div class="list-info">
+  <label class="title-text">
+    Дата:
+    <label class="simple-text">{{todoList.date.toLocaleDateString()}}</label>
+    <i class="fa-solid fa-calendar ms-1"></i>
+  </label>
+  <label class="title-text">
+    <i class="fa-solid fa-tag me-1"></i>
+    <label class="simple-text">{{todoList.tag}}</label>
+  </label>
+</div>
+
+<div class="list">
+  <div *ngFor="let item of todoList.list" class="neumorph-list-card">
+    <div style="display: flex; align-items: center;">
+      <input type="checkbox" [(ngModel)]="item.isReady" class="neumorph-input" />
+      <label [ngClass]="item.isReady ? 'crossed-simple-text' : 'simple-text'">{{item.text}}</label>
     </div>
+    <button class="neumorph-btn sm-neumorph-btn mx-0" title="Удалить пункт"><i class="fa-solid fa-trash"></i></button>
   </div>
+</div>
 
+<div>
   <label class="title-text">Процент выполнения:</label>
   <div class="progress-container neumorph-card">
     <div class="progerss-line" [style.width.%]="todoList.readyPer">
@@ -24,4 +51,16 @@
       <i class="fa-solid fa-person-running fa-fade" style="color: var(--secondary-text-color)"></i>
     </div>
   </div>
+</div>
+
+<hr />
+
+<!--<div class="list-card-header mb-0">
+  <button (click)="closeForm()" class="neumorph-btn sm-neumorph-btn my-0">Отмена <i class="fa-solid fa-arrow-rotate-left"></i></button>
+  <button class="neumorph-btn sm-neumorph-btn my-0">Сохранить <i class="fa-solid fa-check"></i></button>
+</div>-->
+
+<div class="list-card-header mb-0">
+  <button (click)="delete.showModal()" class="neumorph-btn sm-neumorph-btn my-0" title="Удалить список">Удалить <i class="fa-solid fa-trash"></i></button>
+  <button (click)="edit.showModal()" class="neumorph-btn sm-neumorph-btn my-0" title="Редактировать список">Редактировать <i class="fa-solid fa-pen"></i></button>
 </div>

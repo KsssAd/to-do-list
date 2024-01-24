@@ -15,6 +15,7 @@
 }
 
 .list-panel {
+  height: 70vh;
   width: 50%;
   padding: 1em;
   margin: auto;
@@ -85,6 +86,14 @@
     font-size: 3em;
   }
 
+.list-name {
+  width: 45%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  padding-inline: 0;
+}
 
 
 @media (max-width: 1690px) {

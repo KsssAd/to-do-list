@@ -5,7 +5,7 @@ import { ListItem, TodoList } from '../../models/to-do-list.model';
 @Component({
   selector: 'calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css', '../nav-menu/nav-menu.component.css']
 })
 export class CalendarComponent {
   public daysInMonth: Day[] = [];
@@ -95,12 +95,17 @@ export class CalendarComponent {
   }
 
   dateClick(date: number) {
+    this.todoList = [];
     this.selectedDate = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth(), date);
 
     let te = new TodoList;
     let item = new ListItem;
     item = { id: 1, text: "test", isReady: true };
-    let test = [item, item, item];
+    let item2 = new ListItem;
+    item2 = { id: 2, text: "testffffffffffffffff", isReady: false };
+    let item3 = new ListItem;
+    item3 = { id: 3, text: "t", isReady: true };
+    let test = [item, item2, item3, item2, item, item2, item];
 
     te = {
       name: "TEST",
@@ -112,6 +117,16 @@ export class CalendarComponent {
     }
 
     this.todoList.push(te);
+
+    te = {
+      name: "TEST2000000000000",
+      isFavorite: false,
+      date: this.today,
+      tag: "home",
+      readyPer: 20,
+      list: test
+    }
+
     this.todoList.push(te);
   }
 
