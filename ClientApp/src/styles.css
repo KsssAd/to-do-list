@@ -38,6 +38,11 @@ hr {
   width: 30em;
 }
 
+.dialog-add-edit {
+  /*height: 40.3em;*/
+  width: 30em;
+}
+
 .close-icon {
   color: var(--text-color);
   font-size: x-large;
@@ -222,16 +227,6 @@ hr {
   text-shadow: var(--outset-shadow-default);
   font-size: xx-large;
   -webkit-text-stroke: 1px var(--stroke-color);
-}
-
-.mr-1 {
-  margin-right: 0.5em !important;
-}
-.mr-2 {
-  margin-right: 1em !important;
-}
-.mr-3 {
-  margin-right: 1.5em !important;
 }
 
 /*--------------------------*/

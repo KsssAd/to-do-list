@@ -1,1 +1,95 @@
-test
+<dialog #addTag>
+  <div>
+    <label class="title-text">Введите новый тег:</label>
+    <input [(ngModel)]="newTag" type="text" placeholder="Введите название" maxlength="20" class="neumorph-input ms-1" />
+    <div class="d-flex justify-content-between mt-2">
+      <button (click)="addTag.close()" class="neumorph-btn sm-neumorph-btn">Отмена <i class="fa-solid fa-arrow-rotate-left"></i></button>
+      <button (click)="addNewTag(); addTag.close();" class="neumorph-btn sm-neumorph-btn">Сохранить <i class="fa-solid fa-check"></i></button>
+    </div>
+  </div>
+</dialog>
+
+<dialog #addItem>
+
+  <div class="d-flex justify-content-between mt-2">
+    <button (click)="addTag.close()" class="neumorph-btn sm-neumorph-btn">Отмена <i class="fa-solid fa-arrow-rotate-left"></i></button>
+    <button (click)="addNewTag(); addTag.close();" class="neumorph-btn sm-neumorph-btn">Сохранить <i class="fa-solid fa-check"></i></button>
+  </div>
+</dialog>
+
+<div class="list-card-header">
+  <label class="title-text">{{isEdit ? "Редактирование" : "Добавление"}}</label>
+  <i (click)="closeForm()" class="fa-solid fa-xmark close-icon"></i>
+</div>
+
+<hr />
+
+<div>
+  <div class="field">
+    <label class="simple-text w-25">Название</label>
+    <div class="w-75">
+      <input [(ngModel)]="todoList.name"
+             type="text"
+             class="neumorph-input ms-0"
+             maxlength="20" />
+      <label class="secondary-text">{{todoList.name.length}}/20</label>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="simple-text w-25">Дата</label>
+    <input [ngModel]="date | date:'yyyy-MM-dd'"
+           (ngModelChange)="date = $event"
+           type="date"
+           class="neumorph-input ms-0 w-75" />
+  </div>
+  <div class="field">
+    <label class="simple-text w-25">Тег</label>
+    <div class="w-75">
+      <input [(ngModel)]="todoList.tag"
+             (focus)="isOpenDropDown = true"
+             (focusout)="isOpenDropDown = false"
+             type="text"
+             readonly="true"
+             class="neumorph-input ms-0" />
+      <button (click)="isOpenDropDown = !isOpenDropDown;" (focusout)="isOpenDropDown = false" class="neumorph-btn sm-neumorph-btn mx-1"><i class="fa-solid fa-list-ul"></i></button>
+      <button (click)="addTag.showModal();" class="neumorph-btn sm-neumorph-btn mx-1"><i class="fa-solid fa-plus"></i></button>
+
+      <ul class="dropdown-tag-list" [ngClass]="isOpenDropDown ? 'dropdown-tag-list-open' : ''">
+        <li (click)="tagClick(tag)" *ngFor="let tag of allTags">
+          <label class="tag-name">{{tag}}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="field">
+    <label class="simple-text w-25">Избранное</label>
+    <div class=" field w-75">
+      <input [(ngModel)]="todoList.isFavorite"
+             type="checkbox"
+             class="neumorph-input"
+             style="cursor: pointer;" />
+      <i class="fa-solid fa-heart big-neumorph-icon ms-2" [ngClass]="todoList.isFavorite ? 'fa-beat' : ''" style="font-size: x-large"></i>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex align-items-start">
+  <button (click)="addItem.showModal()" class="neumorph-btn sm-neumorph-btn mx-0" title="Добавить новую задачу"><i class="fa-solid fa-plus"></i></button>
+  <div class="list w-100">
+    <div *ngFor="let item of todoList.list" class="neumorph-list-card">
+      <div style="display: flex; align-items: center;">
+        <input [(ngModel)]="item.isReady" type="checkbox" class="neumorph-input" />
+        <label [ngClass]="item.isReady ? 'crossed-simple-text' : 'simple-text'">{{item.text}}</label>
+      </div>
+      <button class="neumorph-btn sm-neumorph-btn mx-0" title="Удалить пункт"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  </div>
+</div>
+
+<hr />
+
+<div class="list-card-header mb-0">
+  <button (click)="closeForm()" class="neumorph-btn sm-neumorph-btn my-0">Отмена <i class="fa-solid fa-arrow-rotate-left"></i></button>
+  <button (click)="save()" [disabled]="!isValid()" class="neumorph-btn sm-neumorph-btn my-0">Сохранить <i class="fa-solid fa-check"></i></button>
+</div>

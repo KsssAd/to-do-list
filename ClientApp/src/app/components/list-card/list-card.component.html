@@ -1,12 +1,12 @@
 <dialog #delete>
   <label class="title-text">Вы действительно хотите удалить список {{todoList.name}}?</label>
-  <div class="d-flex justify-content-around mt-1">
+  <div class="d-flex justify-content-around mt-3">
     <button (click)="delete.close()" class="neumorph-btn sm-neumorph-btn my-0">Нет</button>
     <button (click)="deleteList(); delete.close()" class="neumorph-btn sm-neumorph-btn my-0">Да</button>
   </div>
 </dialog>
 
-<dialog #edit>
+<dialog #edit class="dialog-add-edit">
   <add-edit-list [todoList]="todoList"
                  [isEdit]="true"
                  (close)="edit.close();">
@@ -55,10 +55,6 @@
 
 <hr />
 
-<!--<div class="list-card-header mb-0">
-  <button (click)="closeForm()" class="neumorph-btn sm-neumorph-btn my-0">Отмена <i class="fa-solid fa-arrow-rotate-left"></i></button>
-  <button class="neumorph-btn sm-neumorph-btn my-0">Сохранить <i class="fa-solid fa-check"></i></button>
-</div>-->
 
 <div class="list-card-header mb-0">
   <button (click)="delete.showModal()" class="neumorph-btn sm-neumorph-btn my-0" title="Удалить список">Удалить <i class="fa-solid fa-trash"></i></button>

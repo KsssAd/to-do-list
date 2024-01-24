@@ -5,7 +5,7 @@ import { ListItem, TodoList } from '../../models/to-do-list.model';
 @Component({
   selector: 'calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css', '../nav-menu/nav-menu.component.css']
+  styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent {
   public daysInMonth: Day[] = [];
@@ -119,8 +119,8 @@ export class CalendarComponent {
     this.todoList.push(te);
 
     te = {
-      name: "TEST2000000000000",
-      isFavorite: false,
+      name: "TEST2000000000000000",
+      isFavorite: true,
       date: this.today,
       tag: "home",
       readyPer: 20,

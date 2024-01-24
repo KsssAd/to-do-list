@@ -24,18 +24,17 @@
   </div>
 
   <div class="list-panel">
-    <div *ngIf="todoList.length !== 0" class="neumorph-card h-100">
+    <div *ngIf="todoList.length !== 0" class="neumorph-card h-100 overflow-auto">
       <label class="title-text">Списки на {{selectedDate.toLocaleDateString()}}:</label>
       <div *ngFor="let item of todoList" style="display: flex; align-items: center;">
         <i *ngIf="item.isFavorite" class="fa-solid fa-heart big-neumorph-icon me-2" title="Избранное" style="font-size: x-large;"></i>
 
         <div class="neumorph-list-card mx-0 w-100">
-          <a (click)="showTodoListModal(item); listCard.showModal()" title="{{item.name}}" class="nav-link title-text list-name mx-0">{{item.name}}</a>
-          <label class="title-text">
+          <a (click)="showTodoListModal(item); listCard.showModal()" title="{{item.name}}" class="title-text list-name mx-0">{{item.name}}</a>
+          <label class="title-text second-info">
             <i class="fa-solid fa-tag me-1"></i>
-            <label class="simple-text">{{item.tag}}</label>
+            <label class="simple-text">{{item.tag}} - {{item.readyPer}}%</label>
           </label>
-          <label class="simple-text">{{item.readyPer}}%</label>
         </div>
       </div>
     </div>
