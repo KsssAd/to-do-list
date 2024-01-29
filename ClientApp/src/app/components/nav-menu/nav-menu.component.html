@@ -1,6 +1,6 @@
 <div class="header" *ngIf="authService.isLoggedIn" (window:resize)="onResize($event)">
   <a class="neumorph-logo header-logo" routerLink="/"> TO-DO LIST</a>
-  <ul class="navbar" *ngIf="windowWidth > 1160 ? true : false">
+  <ul class="navbar" *ngIf="windowWidth >= 1160 ? true : false">
     <li class="navbar-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <i class="fa-solid fa-home big-neumorph-icon"></i>
       <a class="nav-link title-text" routerLink="/">Главная</a>
@@ -11,7 +11,7 @@
     </li>
     <li class="navbar-item" routerLinkActive="active">
       <i class="fa-solid fa-heart big-neumorph-icon"></i>
-      <a class="nav-link title-text" routerLink="/">Избранное</a>
+      <a class="nav-link title-text" routerLink="/favorite">Избранное</a>
     </li>
     <li class="navbar-item">
       <i class="fa-solid fa-user me-1 big-neumorph-icon"></i>
@@ -34,7 +34,7 @@
       <a class="nav-link title-text" routerLink="/calendar" title="Календарь"><i class="fa-solid fa-calendar big-neumorph-icon"></i></a>
     </div>
     <div class="v-navbar-item" routerLinkActive="active">
-      <a class="nav-link title-text" routerLink="/" title="Избранное"><i class="fa-solid fa-heart big-neumorph-icon"></i></a>
+      <a class="nav-link title-text" routerLink="/favorite" title="Избранное"><i class="fa-solid fa-heart big-neumorph-icon"></i></a>
     </div>
     <hr/>
     <div class="v-navbar-item">

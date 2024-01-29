@@ -3,53 +3,13 @@
   align-items: center;
 }
 
-.dropdown-tag-list {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  width: 10em;
-  box-shadow: var(--outset-shadow-default);
-  background: var(--bg-color);
-  border-radius: 50px;
-  right: 1.5em;
-  padding: 1em;
-  margin-top: 0;
-  list-style-type: none;
-}
-
-  .dropdown-tag-list li {
-    margin-inline: 1em;
-    margin-block: 0.5em;
-    padding-inline: 1em;
-    padding-block: 0.3em;
-    border-radius: 50px;
-    box-shadow: var(--inset-shadow-default);
-    cursor: pointer;
-    transition: 0.5s;
-  }
-
-    .dropdown-tag-list li:hover {
-      margin-inline: 0.5em;
-    }
-
-    .dropdown-tag-list li:hover .tag-name {
-      color: var(--link-hover-color);
-    }
-
-.dropdown-tag-list-open {
-  visibility: visible;
-  opacity: 1;
-  width: 10em;
-  box-shadow: var(--outset-shadow-default);
-  background: var(--bg-color);
-  border-radius: 50px;
-  right: 1.5em;
-  padding: 1em;
-  margin-top: 0;
-}
-
 .tag-name {
   text-decoration: none;
   color: var(--text-color);
   letter-spacing: 0.1em;
+}
+
+.item-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

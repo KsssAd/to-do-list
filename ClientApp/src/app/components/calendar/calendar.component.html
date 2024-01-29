@@ -4,6 +4,12 @@
   </list-card>
 </dialog>
 
+<dialog #add class="dialog-add-edit">
+  <add-edit-list [isEdit]="false"
+                 (close)="add.close();">
+  </add-edit-list>
+</dialog>
+
 <div class="calendar-panels">
   <div class="calendar-panel">
     <div class="calendar-header-container">
@@ -29,19 +35,19 @@
       <div *ngFor="let item of todoList" style="display: flex; align-items: center;">
         <i *ngIf="item.isFavorite" class="fa-solid fa-heart big-neumorph-icon me-2" title="Избранное" style="font-size: x-large;"></i>
 
-        <div class="neumorph-list-card mx-0 w-100">
-          <a (click)="showTodoListModal(item); listCard.showModal()" title="{{item.name}}" class="title-text list-name mx-0">{{item.name}}</a>
-          <label class="title-text second-info">
+        <div class="neumorph-list-card mx-0" style="width: 90%;">
+          <label (click)="showTodoListModal(item); listCard.showModal()" title="{{item.name}}" class="title-text list-name mx-0">{{item.name}}</label>
+          <div class="title-text second-info">
             <i class="fa-solid fa-tag me-1"></i>
             <label class="simple-text">{{item.tag}} - {{item.readyPer}}%</label>
-          </label>
+          </div>
         </div>
       </div>
     </div>
 
     <div *ngIf="todoList.length === 0" class="null-day neumorph-card h-100">
       <label class="simple-text mb-2">На дату <label class="title-text"> {{selectedDate.toLocaleDateString()}} </label> отсутствуют списки дел</label>
-      <button class="neumorph-btn add-btn-cal"><i class="fa-regular fa-square-plus"></i></button>
+      <button (click)="add.showModal()" class="neumorph-btn add-btn-cal"><i class="fa-regular fa-square-plus"></i></button>
     </div>
   </div>
 </div>

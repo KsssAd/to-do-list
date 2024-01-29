@@ -8,7 +8,7 @@ export class TodoList {
 }
 
 export class ListItem {
-  id: number = 0;
+  id: number;
   text: string = "";
   isReady: boolean = false;
 }

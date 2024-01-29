@@ -87,7 +87,7 @@
   }
 
 .list-name {
-  width: 65%;
+  width: 55%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -132,29 +132,13 @@
 }
 
 @media (min-width: 950px) and (max-width: 1270px) {
-  .neumorph-list-card {
-    display: block;
-  }
-
   .list-name {
-    width: 100%;
-  }
-
-  .second-info {
-    float: right;
+    width: 38%;
   }
 }
 
 @media (max-width: 720px) {
-  .neumorph-list-card {
-    display: block;
-  }
-
   .list-name {
-    width: 100%;
-  }
-
-  .second-info {
-    float: right;
+    width: 38%;
   }
 }

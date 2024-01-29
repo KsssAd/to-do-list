@@ -116,7 +116,7 @@ export class CalendarComponent {
       list: test
     }
 
-    this.todoList.push(te);
+    //this.todoList.push(te);
 
     te = {
       name: "TEST2000000000000000",
@@ -127,12 +127,10 @@ export class CalendarComponent {
       list: test
     }
 
-    this.todoList.push(te);
+    //this.todoList.push(te);
   }
 
   showTodoListModal(todoList: TodoList) {
-    this.todoList = [];
-
     this.currTodoList = todoList;
   }
 }

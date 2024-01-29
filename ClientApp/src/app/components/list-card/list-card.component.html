@@ -13,6 +13,8 @@
   </add-edit-list>
 </dialog>
 
+<!---------------------------------------------------------------------------------------------------------->
+
 <div class="list-card-header">
   <i [ngClass]="todoList.isFavorite ? 'fa-solid fa-heart fa-beat big-neumorph-icon' : ''"></i>
   <label class="title-text">{{todoList.name}}</label>
@@ -35,11 +37,10 @@
 
 <div class="list">
   <div *ngFor="let item of todoList.list" class="neumorph-list-card">
-    <div style="display: flex; align-items: center;">
+    <div class="d-flex align-items-center">
       <input type="checkbox" [(ngModel)]="item.isReady" class="neumorph-input" />
       <label [ngClass]="item.isReady ? 'crossed-simple-text' : 'simple-text'">{{item.text}}</label>
     </div>
-    <button class="neumorph-btn sm-neumorph-btn mx-0" title="Удалить пункт"><i class="fa-solid fa-trash"></i></button>
   </div>
 </div>
 
@@ -54,7 +55,6 @@
 </div>
 
 <hr />
-
 
 <div class="list-card-header mb-0">
   <button (click)="delete.showModal()" class="neumorph-btn sm-neumorph-btn my-0" title="Удалить список">Удалить <i class="fa-solid fa-trash"></i></button>

@@ -11,6 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ListCardComponent } from './components/list-card/list-card.component';
 import { AddEditListComponent } from './components/add-edit-list/add-edit-list.component';
+import { FavoriteComponent } from './components/favorite/favorite.component';
 
 import { AuthService } from './services/auth.service'
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent, data: { title: 'Авторизация'} },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'favorite', component: FavoriteComponent }
 ];
 
 @NgModule({
@@ -29,6 +31,7 @@ const routes: Routes = [
     CalendarComponent,
     ListCardComponent,
     AddEditListComponent,
+    FavoriteComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

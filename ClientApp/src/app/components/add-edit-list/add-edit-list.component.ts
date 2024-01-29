@@ -15,11 +15,10 @@ export class AddEditListComponent {
   public allTags: string[] = ["test1", "test2", "test3"];
   public isOpenDropDown: boolean = false;
   public newTag: string = "";
+  public newItemText: string = "";
   public date: Date = this.todoList.date;
 
-  constructor() {
-
-  }
+  constructor() { }
 
   public closeForm() {
     this.close.emit();
@@ -34,6 +33,13 @@ export class AddEditListComponent {
 
   }
 
+  addNewTodoListItem() {
+    let newItem = new ListItem();
+    newItem.text = this.newItemText;
+    this.todoList.list.push(newItem);
+    this.newItemText = "";
+  }
+
   isValid(): boolean {
     if ((this.todoList.name != null
         && this.todoList.name != "")
@@ -45,6 +51,15 @@ export class AddEditListComponent {
   }
 
   save() {
+    this.todoList.readyPer = this.calcPerReady();
 
+    this.closeForm();
+  }
+
+  calcPerReady(): number {
+    let allCount = this.todoList.list.length;
+    let readyCount = this.todoList.list.filter(p => p.isReady === true).length;
+
+    return Math.round(readyCount * 100 / allCount);
   }
 }
