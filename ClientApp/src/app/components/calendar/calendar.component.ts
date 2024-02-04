@@ -14,6 +14,7 @@ export class CalendarComponent {
   public today = new Date();
   public selectedMonth = this.today;
   public selectedDate = this.today;
+  public allTodoList: TodoList[] = [];
   public todoList: TodoList[] = [];
   public currTodoList: TodoList = new TodoList();
 
@@ -22,8 +23,51 @@ export class CalendarComponent {
   ) { }
 
   ngOnInit() {
+    this.getAllTodoList();
     this.loadCalendar(this.today);
     this.dateClick(this.today.getDate());
+  }
+
+  getAllTodoList() {
+    let te = new TodoList;
+
+    let item = new ListItem;
+    item = { id: 1, text: "test", isReady: true };
+    let item2 = new ListItem;
+    item2 = { id: 2, text: "testffffffffffffffff", isReady: false };
+    let item3 = new ListItem;
+    item3 = { id: 3, text: "t", isReady: true };
+    let test = [item, item2, item3, item2, item, item2, item];
+
+    te = {
+      name: "TEST",
+      isFavorite: true,
+      date: new Date('2024-01-10'),
+      tag: "work",
+      readyPer: 50,
+      list: test
+    }
+    this.allTodoList.push(te);
+
+    te = {
+      name: "TEST",
+      isFavorite: true,
+      date: new Date('2024-01-27'),
+      tag: "work",
+      readyPer: 80,
+      list: test
+    }
+    this.allTodoList.push(te);
+
+    te = {
+      name: "TEST2000000000000000",
+      isFavorite: true,
+      date: this.today,
+      tag: "home",
+      readyPer: 20,
+      list: test
+    }
+    this.allTodoList.push(te);
   }
 
   nextMonth() {
@@ -48,6 +92,15 @@ export class CalendarComponent {
     return this.today.getFullYear() == this.selectedMonth.getFullYear()
       && this.today.getMonth() == this.selectedMonth.getMonth()
       && this.today.getDate() == day;
+  }
+
+  isNotEmptyDay(date: number) {
+    let month = this.selectedMonth.getMonth();
+    let year = this.selectedMonth.getFullYear();
+
+    return this.allTodoList.some(p => p.date.getDate() === date
+      && p.date.getMonth() === month
+      && p.date.getFullYear() === year);
   }
 
   loadCalendar(date: Date) {
@@ -98,36 +151,7 @@ export class CalendarComponent {
     this.todoList = [];
     this.selectedDate = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth(), date);
 
-    let te = new TodoList;
-    let item = new ListItem;
-    item = { id: 1, text: "test", isReady: true };
-    let item2 = new ListItem;
-    item2 = { id: 2, text: "testffffffffffffffff", isReady: false };
-    let item3 = new ListItem;
-    item3 = { id: 3, text: "t", isReady: true };
-    let test = [item, item2, item3, item2, item, item2, item];
-
-    te = {
-      name: "TEST",
-      isFavorite: true,
-      date: this.today,
-      tag: "work",
-      readyPer: 80,
-      list: test
-    }
-
-    //this.todoList.push(te);
-
-    te = {
-      name: "TEST2000000000000000",
-      isFavorite: true,
-      date: this.today,
-      tag: "home",
-      readyPer: 20,
-      list: test
-    }
-
-    //this.todoList.push(te);
+    this.todoList = this.allTodoList.filter(p => p.date.toLocaleDateString() === this.selectedDate.toLocaleDateString());
   }
 
   showTodoListModal(todoList: TodoList) {

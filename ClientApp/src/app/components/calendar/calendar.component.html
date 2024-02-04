@@ -23,7 +23,7 @@
 
     <div class="calendar">
       <label *ngFor="let dayName of weekdayNames" class="title-text weekday">{{dayName}}</label>
-      <button (click)="dateClick(day.date)" *ngFor="let day of daysInMonth" class="neumorph-btn calendar-day" [ngClass]="isToday(day.date) ? 'today' : ''" [disabled]="!day.isCurrMonth">
+      <button (click)="dateClick(day.date)" *ngFor="let day of daysInMonth" class="neumorph-btn calendar-day" [ngClass]="isNotEmptyDay(day.date) ? isToday(day.date) ? 'not-null today' : 'not-null' : isToday(day.date) ? 'today' : ''" [disabled]="!day.isCurrMonth">
         {{day.date}}
       </button>
     </div>
@@ -47,7 +47,7 @@
 
     <div *ngIf="todoList.length === 0" class="null-day neumorph-card h-100">
       <label class="simple-text mb-2">На дату <label class="title-text"> {{selectedDate.toLocaleDateString()}} </label> отсутствуют списки дел</label>
-      <button (click)="add.showModal()" class="neumorph-btn add-btn-cal"><i class="fa-regular fa-square-plus"></i></button>
+      <button (click)="add.showModal()" class="neumorph-btn add-btn"><i class="fa-regular fa-square-plus"></i></button>
     </div>
   </div>
 </div>

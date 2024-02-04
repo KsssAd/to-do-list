@@ -38,6 +38,12 @@ hr {
   width: 30em;
 }
 
+.part-list {
+  overflow: hidden;
+  height: 10em;
+  mask-image: linear-gradient(#000, transparent);
+}
+
 .dialog-add-edit {
   /*height: 40.3em;*/
   width: 30em;
@@ -51,6 +57,17 @@ hr {
 
 .showNav {
   right: 0 !important;
+}
+
+.filter-panel {
+  width: 100%;
+  margin-bottom: 1.5em;
+  margin-inline: 0 !important;
+  padding: 0.5em !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 50px !important;
 }
 
 .r-navbar {
@@ -82,6 +99,15 @@ hr {
   box-shadow: var(--header-shadow);
   position: fixed;
 }
+
+.add-btn {
+  border-radius: 15px !important;
+  padding-inline: 11px !important;
+}
+
+  .add-btn i {
+    font-size: 3em;
+  }
 
 .main-container {
   width: 80%;
@@ -281,20 +307,28 @@ hr {
   }
 }
 
-@media (max-width: 900px) {
-  .home-container {
+@media (max-width: 1250px) {  
+  .filter-panel {
     display: block;
-    width: 100%;
+    border-radius: 30px !important;
   }
 
-  .home-list-panel {
-    width: 90%;
-    margin-inline: auto;
+  #tagInput {
+    width: 85% !important;
+    margin-bottom: 0.5em !important;
   }
 
-  .home-functional-panel {
-    width: 90%;
-    margin-inline: auto;
+  #nameInput {
+    width: 85% !important;
+    margin-bottom: 0.5em !important;
+  }
+
+  #dateInput {
+    width: 43%;
+  }
+
+  #thirdDiv {
+    width: 100% !important;
   }
 }
 

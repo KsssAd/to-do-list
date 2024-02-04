@@ -1,19 +1,127 @@
-<div class="home-container">
-  <div class="neumorph-card home-list-panel">
-    <div class="neumorph-list-card">
-    </div>
-    <div class="neumorph-list-card">
-    </div>
-    <div class="neumorph-list-card">
-    </div>
-    <div class="neumorph-list-card">
-    </div>
-    <div class="neumorph-list-card">
-    </div>
-    <div class="neumorph-list-card">
-    </div>
-  </div>
-  <div class="neumorph-card home-functional-panel">
+<dialog #listCard class="dialog-card">
+  <list-card [todoList]="currTodoList"
+             (close)="listCard.close(); getAllLists()">
+  </list-card>
+</dialog>
 
+<dialog #add class="dialog-add-edit">
+  <add-edit-list [isEdit]="false"
+                 (close)="add.close();">
+  </add-edit-list>
+</dialog>
+
+<dialog #addTag>
+  <input [(ngModel)]="newTag" type="text" placeholder="Введите новый тег" maxlength="20" class="neumorph-input ms-1" />
+  <div class="d-flex justify-content-between mt-2">
+    <button (click)="addTag.close()" class="neumorph-btn sm-neumorph-btn">Отмена <i class="fa-solid fa-arrow-rotate-left"></i></button>
+    <button (click)="addNewTag(); addTag.close();" class="neumorph-btn sm-neumorph-btn">Сохранить <i class="fa-solid fa-check"></i></button>
   </div>
+</dialog>
+
+<div class="home-container" (window:resize)="onResize($event)">
+  <div class="neumorph-card filter-panel">
+    <div class="position-relative">
+      <input [(ngModel)]="selectedTag"
+             (focus)="isOpenDropDown = true"
+             (focusout)="isOpenDropDown = false"
+             type="text"
+             placeholder="Выберете тег"
+             readonly="true"
+             class="neumorph-input my-0"
+             style="width: 12em"
+             id="tagInput" />
+      <button (click)="isOpenDropDown = !isOpenDropDown" (focusout)="isOpenDropDown = false" class="neumorph-btn sm-neumorph-btn ms-0 me-1"><i class="fa-solid fa-list-ul"></i></button>
+      <ul class="dropdown-tag-list" [ngClass]="isOpenDropDown ? 'dropdown-tag-list-open' : ''" style="z-index: 2; right: 0;">
+        <li (click)="filterByTag(tag)" *ngFor="let tag of allTags">
+          <label class="tag-name">{{tag}}</label>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <input [(ngModel)]="nameToFind"
+             type="text"
+             placeholder="Введите название списка"
+             class="neumorph-input my-0"
+             style="width: 17em"
+             id="nameInput" />
+      <button (click)="filterByName()" [disabled]="nameToFind === ''" class="neumorph-btn sm-neumorph-btn ms-0"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <div id="thirdDiv" class="d-flex justify-content-between">
+      <input [(ngModel)]="selectedDate"
+             (change)="filterByDate()"
+             type="date"
+             class="neumorph-input my-0"
+             id="dateInput" />
+
+      <button (click)="resetFilter()" class="neumorph-btn sm-neumorph-btn">
+        Удалить фильтры <i class="fa-solid fa-filter-circle-xmark"></i>
+      </button>
+    </div>
+  </div><hr />
+
+  <div class="home-panels">
+    <div class="neumorph-card home-functional-panel mb-3">
+      <div class="just-panel">
+        <div class="d-flex">
+          <div class="neumorph-card todo-count">
+            <label class="title-text">{{todoList.length}}</label>
+            <label class="secondary-text">Списков</label>
+          </div>
+          <div class="neumorph-card todo-count">
+            <label class="title-text">{{favoriteCount}}</label>
+            <label class="secondary-text">Избранное</label>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column">
+          <button (click)="add.showModal()" class="neumorph-btn special-btn">Список <i class="fa-regular fa-plus"></i></button>
+          <button (click)="addTag.showModal();" class="neumorph-btn special-btn">Тег <i class="fa-regular fa-plus"></i></button>
+        </div>
+      </div>
+
+      <div *ngIf="windowWidth < 900 ? false : true" class="mt-4">
+        <label class="title-text mb-2 text-center">Добро пожаловать в веб-приложение "TO-DO LIST"!</label>
+        <label class="simple-text" style="text-align: justify">
+          Данное приложение выполняет функции планировщика списка дел, позволяет создавать, редактировать и
+          удалять ваши списки, а так же распределять их по датам в календаре и добавлять в избранное.
+          <br />- Для создания списка вам необходимо указать его название, выбрать дату, выбрать тег из уже существующих
+          или добавить новый, добавить сами задачи в список и, если необходимо, пометить список как избранный.
+          <br />- Для просмотра всех избранных списков воспользуйтесь вкладкой <label class="title-text">"Избранное"</label>,
+          на которой предоставлены инструменты для дополнительной фильтрации и удобного поиска.
+          <br />- Для просмотра запланированных на определенные даты списков воспользуйтесь вкладкой <label class="title-text">"Календарь"</label>.
+        </label>
+      </div>
+    </div>
+
+    <div class="home-list-panel">
+      <div *ngFor="let list of filteredTodoList" class="neumorph-card todo-card mb-3">
+
+        <div class="d-flex justify-content-center">
+          <label (click)="showTodoListModal(list); listCard.showModal()" title="{{list.name}}" class="title-text" style="cursor: pointer;">{{list.name}}</label>
+        </div><hr />
+
+        <div class="d-flex justify-content-between">
+          <label class="simple-text"><i class="fa-solid fa-tag"></i> {{list.tag}}</label>
+          <label class="simple-text">{{list.readyPer}}%</label>
+        </div>
+
+        <div class="part-list">
+          <div *ngFor="let item of list.list" class="neumorph-list-card">
+            <div class="d-flex align-items-center">
+              <input type="checkbox" [(ngModel)]="item.isReady" disabled="true" class="neumorph-input" />
+              <label [ngClass]="item.isReady ? 'crossed-simple-text' : 'simple-text'">{{item.text}}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <label class="simple-text"><i class="fa-solid fa-calendar"></i> {{list.date.toLocaleDateString()}}</label>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>

@@ -5,26 +5,47 @@
 </dialog>
 
 <div class="favorite-panel">
-  <div class="neumorph-card w-100 mb-3">
-    <input [(ngModel)]="selectedTag"
-           (focus)="isOpenDropDown = true"
-           (focusout)="isOpenDropDown = false"
-           type="text"
-           readonly="true"
-           class="neumorph-input ms-0 mt-0" />
-    <button (click)="isOpenDropDown = !isOpenDropDown" (focusout)="isOpenDropDown = false" class="neumorph-btn sm-neumorph-btn ms-0 me-1"><i class="fa-solid fa-list-ul"></i></button>
-    <ul class="dropdown-tag-list" [ngClass]="isOpenDropDown ? 'dropdown-tag-list-open' : ''">
-      <li (click)="filterByTag(tag)" *ngFor="let tag of allTags">
-        <label class="tag-name">{{tag}}</label>
-      </li>
-    </ul>
+  <div class="neumorph-card filter-panel">
+    <div class="position-relative">
+      <input [(ngModel)]="selectedTag"
+             (focus)="isOpenDropDown = true"
+             (focusout)="isOpenDropDown = false"
+             type="text"
+             placeholder="Выберете тег"
+             readonly="true"
+             class="neumorph-input my-0"
+             style="width: 12em"
+             id="tagInput" />
+      <button (click)="isOpenDropDown = !isOpenDropDown" (focusout)="isOpenDropDown = false" class="neumorph-btn sm-neumorph-btn ms-0 me-1"><i class="fa-solid fa-list-ul"></i></button>
+      <ul class="dropdown-tag-list" [ngClass]="isOpenDropDown ? 'dropdown-tag-list-open' : ''" style="z-index: 2; right: 0;">
+        <li (click)="filterByTag(tag)" *ngFor="let tag of allTags">
+          <label class="tag-name">{{tag}}</label>
+        </li>
+      </ul>
+    </div>
 
+    <div>
+      <input [(ngModel)]="nameToFind"
+             type="text"
+             placeholder="Введите название списка"
+             class="neumorph-input my-0"
+             style="width: 17em"
+             id="nameInput" />
+      <button (click)="filterByName()" [disabled]="nameToFind === ''" class="neumorph-btn sm-neumorph-btn ms-0"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
 
+    <div id="thirdDiv" class="d-flex justify-content-between">
+      <input [(ngModel)]="selectedDate"
+             (change)="filterByDate()"
+             type="date"
+             class="neumorph-input my-0"
+             id="dateInput" />
 
-    <button (click)="resetFilterByTag()" (focusout)="isOpenDropDown = false" class="neumorph-btn sm-neumorph-btn ms-0 me-1">
-      <i class="fa-solid fa-filter-circle-xmark"></i>
-    </button>
-  </div>
+      <button (click)="resetFilter()" class="neumorph-btn sm-neumorph-btn">
+        Удалить фильтры <i class="fa-solid fa-filter-circle-xmark"></i>
+      </button>
+    </div>
+  </div><hr/>
 
   <div class="fav-todo-list">
     <div *ngFor="let list of filteredTodoList" class="neumorph-card fav-card">

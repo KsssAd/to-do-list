@@ -17,10 +17,8 @@
   width: 90%;
 }
 
-.part-list {
-  overflow: hidden;
-  height: 10em;
-  mask-image: linear-gradient(#000, transparent);
+#thirdDiv {
+  width: 40%;
 }
 
 @media (max-width: 1370px) {
@@ -40,3 +38,4 @@
     grid-template-columns: 1fr;
   }
 }
+

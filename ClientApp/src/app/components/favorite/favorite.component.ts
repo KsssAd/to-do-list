@@ -13,6 +13,8 @@ export class FavoriteComponent {
   public allTags: string[] = ["work", "test2", "test3"];
   public isOpenDropDown: boolean = false;
   public selectedTag: string = "";
+  public nameToFind: string = "";
+  public selectedDate: string;
 
   ngOnInit() {
     this.getFavoriteList();
@@ -59,11 +61,26 @@ export class FavoriteComponent {
 
   filterByTag(selectedTag: string) {
     this.selectedTag = selectedTag;
-    this.filteredTodoList = this.todoList.filter(p => p.tag === selectedTag);
+    this.filteredTodoList = this.getCurrList().filter(p => p.tag === selectedTag);
   }
 
-  resetFilterByTag() {
+  filterByName() {
+    this.filteredTodoList = this.getCurrList().filter(p => p.name.toLowerCase() === this.nameToFind.toLowerCase());
+  }
+
+  filterByDate() {
+    this.filteredTodoList = this.getCurrList().filter(p => p.date.toISOString().split('T')[0] === this.selectedDate);
+  }
+
+  getCurrList(): TodoList[] {
+    return this.todoList === this.filteredTodoList ? this.todoList : this.filteredTodoList;
+  }
+
+  resetFilter() {
     this.filteredTodoList = this.todoList;
+    this.selectedTag = "";
+    this.nameToFind = "";
+    this.selectedDate = "";
   }
 
   showTodoListModal(todoList: TodoList) {

@@ -77,15 +77,6 @@
     box-shadow: var(--outset-shadow-active);
   }
 
-.add-btn-cal {
-  border-radius: 15px;
-  padding-inline: 11px !important;
-}
-
-  .add-btn-cal i {
-    font-size: 3em;
-  }
-
 .list-name {
   width: 55%;
   white-space: nowrap;
@@ -98,6 +89,10 @@
   .list-name:hover {
     color: var(--link-hover-color);
   }
+
+.not-null {
+  color: #00b6ff;
+}
 
 @media (max-width: 1690px) {
   .calendar-day {

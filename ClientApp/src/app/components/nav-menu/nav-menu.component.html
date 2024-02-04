@@ -1,4 +1,4 @@
-<div class="header" *ngIf="authService.isLoggedIn" (window:resize)="onResize($event)">
+<div class="header" *ngIf="authService.isLoggedIn" (window:resize)="onResize($event)" style="z-index: 2">
   <a class="neumorph-logo header-logo" routerLink="/"> TO-DO LIST</a>
   <ul class="navbar" *ngIf="windowWidth >= 1160 ? true : false">
     <li class="navbar-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
