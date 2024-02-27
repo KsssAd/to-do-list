@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ListItem, TodoList } from '../../models/to-do-list.model';
+import { Tag, TodoList } from '../../models/to-do-list.model';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'favorite',
@@ -10,70 +11,49 @@ export class FavoriteComponent {
   public todoList: TodoList[] = [];
   public filteredTodoList: TodoList[] = this.todoList;
   public currTodoList: TodoList = new TodoList();
-  public allTags: string[] = ["work", "test2", "test3"];
+  public allTags: Tag[] = [];
   public isOpenDropDown: boolean = false;
   public selectedTag: string = "";
   public nameToFind: string = "";
   public selectedDate: string;
+  public isLoading: boolean = false;
+
+  constructor(
+    private dbService: DbService,
+  ) { }
 
   ngOnInit() {
     this.getFavoriteList();
+    this.getAllTags();
+  }
+
+  getAllTags() {
+    this.dbService.getAllTags().then(tags => {
+      this.allTags = tags;
+    });
   }
 
   getFavoriteList() {
-    let te = new TodoList;
-    let item = new ListItem;
-    item = { id: 1, text: "test", isReady: true };
-    let item2 = new ListItem;
-    item2 = { id: 2, text: "testffffffffffffffff", isReady: false };
-    let item3 = new ListItem;
-    item3 = { id: 3, text: "t", isReady: true };
-    let test = [item, item2, item3, item2, item, item2, item];
-
-    te = {
-      name: "TEST",
-      isFavorite: true,
-      date: new Date(),
-      tag: "work",
-      readyPer: 80,
-      list: test
-    }
-
-    this.todoList.push(te);
-
-    te = {
-      name: "TEST2000000000000000",
-      isFavorite: true,
-      date: new Date(),
-      tag: "home",
-      readyPer: 20,
-      list: test
-    }
-
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
+    this.isLoading = true;
+    this.dbService.getAllTodoLists().then(list => {
+      this.todoList = list.filter(p => p.isFavorite === true);
+      this.filteredTodoList = list.filter(p => p.isFavorite === true);
+      this.isLoading = false;
+    });
   }
 
-  filterByTag(selectedTag: string) {
-    this.selectedTag = selectedTag;
-    this.filteredTodoList = this.getCurrList().filter(p => p.tag === selectedTag);
+  filter() {
+    if (this.selectedDate != "" && this.selectedTag != "")
+      this.filteredTodoList = this.todoList.filter(p => p.date.toISOString().split('T')[0] === this.selectedDate && p.tag.tagName === this.selectedTag);
+    if (this.selectedDate != "")
+      this.filteredTodoList = this.todoList.filter(p => p.date.toISOString().split('T')[0] === this.selectedDate);
+    else
+      this.filteredTodoList = this.todoList.filter(p => p.tag.tagName === this.selectedTag);
   }
 
   filterByName() {
-    this.filteredTodoList = this.getCurrList().filter(p => p.name.toLowerCase() === this.nameToFind.toLowerCase());
-  }
-
-  filterByDate() {
-    this.filteredTodoList = this.getCurrList().filter(p => p.date.toISOString().split('T')[0] === this.selectedDate);
-  }
-
-  getCurrList(): TodoList[] {
-    return this.todoList === this.filteredTodoList ? this.todoList : this.filteredTodoList;
+    this.filteredTodoList = this.todoList.filter(p => p.name.toLowerCase().includes(this.nameToFind.toLowerCase()));
+    console.info(`Выполнен поиск по имени "${this.nameToFind}".`);
   }
 
   resetFilter() {
@@ -81,11 +61,11 @@ export class FavoriteComponent {
     this.selectedTag = "";
     this.nameToFind = "";
     this.selectedDate = "";
+    console.info("Выполнен сброс всех фильтров.");
   }
 
   showTodoListModal(todoList: TodoList) {
     this.todoList = [];
-
     this.currTodoList = todoList;
   }
 }

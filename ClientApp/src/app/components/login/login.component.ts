@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { DbService } from "../../services/db.service";
 
 @Component({
   selector: 'app-login',
@@ -8,10 +10,18 @@ import { Router } from "@angular/router";
 })
 
 export class LoginComponent {
+  public loginName: string = "";
+  public password: string = "";
+  public errorMessageLogin: string = "";
+  public errorMessageRegister: string = "";
 
   constructor(
-    public router: Router
-  ) { }
+    public router: Router,
+    private authService: AuthService,
+    private dbService: DbService,
+  ) {
+    this.authService.removeCookie();
+  }
 
   ngOnInit() {
     console.info(`
@@ -28,5 +38,46 @@ export class LoginComponent {
     (Неомофизм - это стиль дизайна пользовательского интерфейса, который легко узнается по своему рельефному
     эффекту: за счет мягких теней от элементов они кажутся выпуклыми или, наоборот, вдавленными.)
     `);
+  }
+
+  login() {
+    this.errorMessageLogin = "";
+    let emailInput = document.getElementById("email");
+
+    if (this.loginName !== "" && this.password !== "") {
+      if (emailInput?.classList.contains("ng-valid")) {
+        this.dbService.login(this.loginName, this.password).then(user => {
+          if (user != null) {
+            this.authService.currentUser = user;
+            this.router.navigateByUrl('/');
+            console.info(`Выполнен вход под пользователем ${user}.`);
+          }
+          else this.errorMessageLogin = "Неправильно введен логин или пароль!";
+        });
+      }
+      else this.errorMessageLogin = "Логин должен соответствовать адресу почтового ящика!";
+    }
+    else this.errorMessageLogin = "Заполните все поля!";
+  }
+
+  registration() {
+    this.errorMessageRegister = "";
+    let emailInput = document.getElementById("email2");
+
+    if (this.loginName !== "" && this.password !== "") {
+      if (emailInput?.classList.contains("ng-valid")) {
+        if (this.dbService.isExistUser(this.loginName) === false) {
+          this.dbService.registration(this.loginName, this.password).then(user => {
+            this.authService.currentUser = user;
+            this.router.navigateByUrl('/');
+            console.info(`Выполнена регистрация пользователя ${user}.`);
+            console.info(`Выполнен вход под пользователем ${user}.`);
+          });
+        }
+        else this.errorMessageRegister = "Такой пользователь уже существует в системе!";
+      }
+      else this.errorMessageRegister = "Логин должен соответствовать адресу почтового ящика!";
+    }
+    else this.errorMessageRegister = "Заполните все поля!";
   }
 }

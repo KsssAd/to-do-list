@@ -1,22 +1,31 @@
 <dialog #listCard class="dialog-card">
   <list-card [todoList]="currTodoList"
-             (close)="listCard.close(); getAllLists()">
+             (close)="listCard.close(); ngOnInit()">
   </list-card>
 </dialog>
 
 <dialog #add class="dialog-add-edit">
   <add-edit-list [isEdit]="false"
-                 (close)="add.close();">
+                 (close)="add.close(); ngOnInit()">
   </add-edit-list>
 </dialog>
 
 <dialog #addTag>
   <input [(ngModel)]="newTag" type="text" placeholder="Введите новый тег" maxlength="20" class="neumorph-input ms-1" />
+  <br />
+  <div class="d-flex align-items-center">
+    <label class="title-text">Выберете цвет: </label>
+    <input [(ngModel)]="newTagColor" type="color" class="neumorph-input" />
+    <i class="fa-solid fa-tag fa-xl" [style.color]="newTagColor" style="opacity: 0.7;"></i>
+  </div>
+  <label *ngIf="isTagError" class="text-danger fw-light" style="font-size: smaller;">Подобный тег уже существует</label>
   <div class="d-flex justify-content-between mt-2">
     <button (click)="addTag.close()" class="neumorph-btn sm-neumorph-btn">Отмена <i class="fa-solid fa-arrow-rotate-left"></i></button>
-    <button (click)="addNewTag(); addTag.close();" class="neumorph-btn sm-neumorph-btn">Сохранить <i class="fa-solid fa-check"></i></button>
+    <button (click)="addNewTag();" class="neumorph-btn sm-neumorph-btn">Сохранить <i class="fa-solid fa-check"></i></button>
   </div>
 </dialog>
+
+<!---------------------------------------------------------------------------------------------------------->
 
 <div class="home-container" (window:resize)="onResize($event)">
   <div class="neumorph-card filter-panel">
@@ -32,20 +41,22 @@
              id="tagInput" />
       <button (click)="isOpenDropDown = !isOpenDropDown" (focusout)="isOpenDropDown = false" class="neumorph-btn sm-neumorph-btn ms-0 me-1"><i class="fa-solid fa-list-ul"></i></button>
       <ul class="dropdown-tag-list" [ngClass]="isOpenDropDown ? 'dropdown-tag-list-open' : ''" style="z-index: 2; right: 0;">
-        <li (click)="filterByTag(tag)" *ngFor="let tag of allTags">
-          <label class="tag-name">{{tag}}</label>
+        <li (click)="filterByTag(tag.tagName)" *ngFor="let tag of allTags">
+          <label class="tag-name simple-text"><i class="fa-solid fa-tag me-2" [style.color]="tag.color" style="opacity: 0.7;"></i>{{tag.tagName}}</label>
         </li>
+        <li class="secondary-text" *ngIf="allTags.length === 0">Нет тегов</li>
       </ul>
     </div>
 
     <div>
+      <i class="fa-solid fa-magnifying-glass ms-2" style="color: var(--secondary-text-color);"></i>
       <input [(ngModel)]="nameToFind"
+             (input)="filterByName()"
              type="text"
              placeholder="Введите название списка"
              class="neumorph-input my-0"
              style="width: 17em"
-             id="nameInput" />
-      <button (click)="filterByName()" [disabled]="nameToFind === ''" class="neumorph-btn sm-neumorph-btn ms-0"><i class="fa-solid fa-magnifying-glass"></i></button>
+             id="nameInput"/>
     </div>
 
     <div id="thirdDiv" class="d-flex justify-content-between">
@@ -62,7 +73,7 @@
   </div><hr />
 
   <div class="home-panels">
-    <div class="neumorph-card home-functional-panel mb-3">
+    <div class="neumorph-card home-functional-panel mb-4">
       <div class="just-panel">
         <div class="d-flex">
           <div class="neumorph-card todo-count">
@@ -95,7 +106,16 @@
       </div>
     </div>
 
-    <div class="home-list-panel">
+    <div *ngIf="isLoading" class="w-100 d-flex justify-content-center align-items-center" style="color: var(--secondary-text-color);">
+      <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+      <label class="fw-light ms-2">Загрузка данных...</label>
+    </div>
+
+    <div *ngIf="filteredTodoList.length === 0 && !isLoading" class="w-100 d-flex justify-content-center align-items-center" style="color: var(--secondary-text-color);">
+      <label class="fw-light ms-2">Списки отсутствуют</label>
+    </div>
+
+    <div *ngIf="!isLoading && filteredTodoList.length !== 0" class="home-list-panel">
       <div *ngFor="let list of filteredTodoList" class="neumorph-card todo-card mb-3">
 
         <div class="d-flex justify-content-center">
@@ -103,7 +123,7 @@
         </div><hr />
 
         <div class="d-flex justify-content-between">
-          <label class="simple-text"><i class="fa-solid fa-tag"></i> {{list.tag}}</label>
+          <label class="simple-text"><i class="fa-solid fa-tag" [style.color]="list.tag.color" style="opacity: 0.7;"></i> {{list.tag.tagName}}</label>
           <label class="simple-text">{{list.readyPer}}%</label>
         </div>
 

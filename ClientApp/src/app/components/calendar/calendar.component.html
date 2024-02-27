@@ -1,12 +1,12 @@
 <dialog #listCard class="dialog-card">
   <list-card [todoList]="currTodoList"
-             (close)="listCard.close(); dateClick(today.getDate());">
+             (close)="listCard.close(); getAllTodoList(); dateClick(today.getDate());">
   </list-card>
 </dialog>
 
 <dialog #add class="dialog-add-edit">
   <add-edit-list [isEdit]="false"
-                 (close)="add.close();">
+                 (close)="add.close(); ngOnInit()">
   </add-edit-list>
 </dialog>
 
@@ -32,16 +32,12 @@
   <div class="list-panel">
     <div *ngIf="todoList.length !== 0" class="neumorph-card h-100 overflow-auto">
       <label class="title-text">Списки на {{selectedDate.toLocaleDateString()}}:</label>
-      <div *ngFor="let item of todoList" style="display: flex; align-items: center;">
-        <i *ngIf="item.isFavorite" class="fa-solid fa-heart big-neumorph-icon me-2" title="Избранное" style="font-size: x-large;"></i>
-
-        <div class="neumorph-list-card mx-0" style="width: 90%;">
+      <div *ngFor="let item of todoList" class="d-flex align-items-center">
+        <div class="neumorph-list-card mx-0 w-100">
           <label (click)="showTodoListModal(item); listCard.showModal()" title="{{item.name}}" class="title-text list-name mx-0">{{item.name}}</label>
-          <div class="title-text second-info">
-            <i class="fa-solid fa-tag me-1"></i>
-            <label class="simple-text">{{item.tag}} - {{item.readyPer}}%</label>
-          </div>
+          <label class="simple-text"><i class="fa-solid fa-tag" [style.color]="item.tag.color" style="opacity: 0.7;"></i>/{{item.readyPer}}%</label>
         </div>
+        <i *ngIf="item.isFavorite" class="fa-solid fa-heart big-neumorph-icon ms-2" title="Избранное" style="font-size: x-large;"></i>
       </div>
     </div>
 

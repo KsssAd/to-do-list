@@ -18,25 +18,27 @@
              id="tagInput" />
       <button (click)="isOpenDropDown = !isOpenDropDown" (focusout)="isOpenDropDown = false" class="neumorph-btn sm-neumorph-btn ms-0 me-1"><i class="fa-solid fa-list-ul"></i></button>
       <ul class="dropdown-tag-list" [ngClass]="isOpenDropDown ? 'dropdown-tag-list-open' : ''" style="z-index: 2; right: 0;">
-        <li (click)="filterByTag(tag)" *ngFor="let tag of allTags">
-          <label class="tag-name">{{tag}}</label>
+        <li (click)="selectedTag = tag.tagName; filter();" *ngFor="let tag of allTags">
+          <label class="tag-name simple-text"><i class="fa-solid fa-tag me-2" [style.color]="tag.color" style="opacity: 0.7;"></i>{{tag.tagName}}</label>
         </li>
+        <li class="secondary-text" *ngIf="allTags.length === 0">Нет тегов</li>
       </ul>
     </div>
 
     <div>
+      <i class="fa-solid fa-magnifying-glass ms-2" style="color: var(--secondary-text-color);"></i>
       <input [(ngModel)]="nameToFind"
+             (input)="filterByName()"
              type="text"
              placeholder="Введите название списка"
              class="neumorph-input my-0"
              style="width: 17em"
              id="nameInput" />
-      <button (click)="filterByName()" [disabled]="nameToFind === ''" class="neumorph-btn sm-neumorph-btn ms-0"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
 
     <div id="thirdDiv" class="d-flex justify-content-between">
       <input [(ngModel)]="selectedDate"
-             (change)="filterByDate()"
+             (change)="filter()"
              type="date"
              class="neumorph-input my-0"
              id="dateInput" />
@@ -45,17 +47,25 @@
         Удалить фильтры <i class="fa-solid fa-filter-circle-xmark"></i>
       </button>
     </div>
-  </div><hr/>
+  </div><hr />
 
-  <div class="fav-todo-list">
+  <div *ngIf="isLoading" class="w-100 d-flex justify-content-center align-items-center" style="color: var(--secondary-text-color);">
+    <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+    <label class="fw-light ms-2">Загрузка данных...</label>
+  </div>
+
+  <div *ngIf="filteredTodoList.length === 0 && !isLoading" class="w-100 d-flex justify-content-center align-items-center" style="color: var(--secondary-text-color);">
+    <label class="fw-light ms-2">Списки отсутствуют</label>
+  </div>
+
+  <div *ngIf="!isLoading && filteredTodoList.length !== 0" class="fav-todo-list">
     <div *ngFor="let list of filteredTodoList" class="neumorph-card fav-card">
-
       <div class="d-flex justify-content-center">
         <label (click)="showTodoListModal(list); listCard.showModal()" title="{{list.name}}" class="title-text" style="cursor: pointer;">{{list.name}}</label>
       </div><hr />
 
       <div class="d-flex justify-content-between">
-        <label class="simple-text"><i class="fa-solid fa-tag"></i> {{list.tag}}</label>
+        <label class="simple-text"><i class="fa-solid fa-tag me-2" [style.color]="list.tag.color" style="opacity: 0.7;"></i>{{list.tag.tagName}}</label>
         <label class="simple-text">{{list.readyPer}}%</label>
       </div>
 

@@ -38,6 +38,7 @@
   }
 
 .todo-card{
+  height: 15em;
   width: 90%;
 }
 
@@ -79,6 +80,10 @@
 
   .special-btn{
     padding-inline: 0;
+  }
+
+  .todo-card{
+    margin-top: 1.5em;
   }
 }
 

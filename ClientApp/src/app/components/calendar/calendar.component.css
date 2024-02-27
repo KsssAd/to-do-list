@@ -78,7 +78,7 @@
   }
 
 .list-name {
-  width: 55%;
+  width: 70%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -123,17 +123,5 @@
     height: 2rem;
     border-radius: 10px;
     margin: 0.3em;
-  }
-}
-
-@media (min-width: 950px) and (max-width: 1270px) {
-  .list-name {
-    width: 38%;
-  }
-}
-
-@media (max-width: 720px) {
-  .list-name {
-    width: 38%;
   }
 }

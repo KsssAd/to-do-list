@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Day } from '../../models/calendar.model';
 import { ListItem, TodoList } from '../../models/to-do-list.model';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'calendar',
@@ -19,55 +20,19 @@ export class CalendarComponent {
   public currTodoList: TodoList = new TodoList();
 
   constructor(
-
+    private dbService: DbService,
   ) { }
 
   ngOnInit() {
     this.getAllTodoList();
     this.loadCalendar(this.today);
-    this.dateClick(this.today.getDate());
   }
 
   getAllTodoList() {
-    let te = new TodoList;
-
-    let item = new ListItem;
-    item = { id: 1, text: "test", isReady: true };
-    let item2 = new ListItem;
-    item2 = { id: 2, text: "testffffffffffffffff", isReady: false };
-    let item3 = new ListItem;
-    item3 = { id: 3, text: "t", isReady: true };
-    let test = [item, item2, item3, item2, item, item2, item];
-
-    te = {
-      name: "TEST",
-      isFavorite: true,
-      date: new Date('2024-01-10'),
-      tag: "work",
-      readyPer: 50,
-      list: test
-    }
-    this.allTodoList.push(te);
-
-    te = {
-      name: "TEST",
-      isFavorite: true,
-      date: new Date('2024-01-27'),
-      tag: "work",
-      readyPer: 80,
-      list: test
-    }
-    this.allTodoList.push(te);
-
-    te = {
-      name: "TEST2000000000000000",
-      isFavorite: true,
-      date: this.today,
-      tag: "home",
-      readyPer: 20,
-      list: test
-    }
-    this.allTodoList.push(te);
+    this.dbService.getAllTodoLists().then(list => {
+      this.allTodoList = list;
+      this.dateClick(this.today.getDate());
+    });
   }
 
   nextMonth() {

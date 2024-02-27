@@ -1,11 +1,30 @@
-<div class="main-container">
-  <div class="login-div">
-    <label class="neumorph-logo">TO-DO LIST</label>
-    <div class="neumorph-card login-btns-div">
-      <input class="neumorph-input" type="email" placeholder="Введите логин" />
-      <input class="neumorph-input" type="password" placeholder="Введите пароль" />
-      <button class="neumorph-btn" (click)="this.router.navigateByUrl('/');">Регистрация</button>
-      <button class="neumorph-btn">Вход</button>
+<dialog #registrationModal>
+  <div class="d-flex flex-column">
+    <label class="simple-text">В качестве логина введите адрес эл.почты:</label>
+    <input [(ngModel)]="loginName" id="email2" class="neumorph-input" type="email" email placeholder="Введите логин" />
+    <label class="simple-text">Придумайте надежный пароль:</label>
+    <input [(ngModel)]="password" class="neumorph-input" type="password" placeholder="Введите пароль" />
+    <label *ngIf="errorMessageRegister != ''" class="text-danger fw-light" style="font-size: smaller;">{{errorMessageRegister}}</label>
+    <div class="d-flex justify-content-between">
+      <button (click)="registrationModal.close(); password = ''; loginName = ''" class="neumorph-btn">Отмена</button>
+      <button (click)="registration()" class="neumorph-btn">Pегистрация</button>
     </div>
   </div>
-</div>
+</dialog>
+
+  <div class="main-container">
+    <div class="login-div">
+      <label class="neumorph-logo">TO-DO LIST</label>
+      <div class="neumorph-card login-btns-div">
+        <input [(ngModel)]="loginName" id="email" class="neumorph-input" type="email" email placeholder="Введите логин" />
+        <input [(ngModel)]="password" class="neumorph-input" type="password" placeholder="Введите пароль" />
+        <label *ngIf="errorMessageLogin != ''" class="text-danger fw-light" style="font-size: smaller;">{{errorMessageLogin}}</label>
+        <button (click)="login()" class="neumorph-btn">Вход</button>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="simple-text">Ещё нет аккаунта?</label>
+          <button class="neumorph-btn" (click)="password = ''; loginName = ''; registrationModal.showModal()">Регистрация</button>
+        </div>
+      </div>
+    </div>
+  </div>

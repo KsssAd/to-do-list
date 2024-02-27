@@ -40,7 +40,7 @@ hr {
 
 .part-list {
   overflow: hidden;
-  height: 10em;
+  height: 50%;
   mask-image: linear-gradient(#000, transparent);
 }
 
@@ -259,10 +259,15 @@ hr {
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  width: 10em;
+  width: 15em;
+  height: 20vh;
+  overflow: auto;
   box-shadow: var(--outset-shadow-default);
   background: var(--bg-color);
-  border-radius: 50px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 50px;
   right: 1.5em;
   padding: 1em;
   margin-top: 0;
@@ -291,13 +296,6 @@ hr {
 .dropdown-tag-list-open {
   visibility: visible;
   opacity: 1;
-  width: 10em;
-  box-shadow: var(--outset-shadow-default);
-  background: var(--bg-color);
-  border-radius: 50px;
-  right: 1.5em;
-  padding: 1em;
-  margin-top: 0;
 }
 /*--------------------------*/
 

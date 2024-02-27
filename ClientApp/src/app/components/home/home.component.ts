@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { ListItem, TodoList } from '../../models/to-do-list.model';
+import { Component, ViewChild } from '@angular/core';
+import { Tag, TodoList } from '../../models/to-do-list.model';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,9 @@ import { ListItem, TodoList } from '../../models/to-do-list.model';
 })
 export class HomeComponent {
   public todoList: TodoList[] = [];
-  public filteredTodoList: TodoList[] = this.todoList;
+  public filteredTodoList: TodoList[] = [];
   public currTodoList: TodoList = new TodoList();
-  public allTags: string[] = ["work", "test2", "test3"];
+  public allTags: Tag[] = [];
   public isOpenDropDown: boolean = false;
   public selectedTag: string = "";
   public nameToFind: string = "";
@@ -18,59 +19,45 @@ export class HomeComponent {
   public favoriteCount: number = 0;
   public windowWidth: number = window.innerWidth;
   public newTag: string = "";
+  public newTagColor: string = "";
+  public isLoading: boolean = false;
+  public isTagError: boolean = false;
+
+  @ViewChild('addTag') addTag: HTMLDialogElement;
+
+  constructor(
+    private dbService: DbService,
+  ) { }
 
   ngOnInit() {
     this.getAllLists();
-    this.favoriteCount = this.todoList.filter(p => p.isFavorite === true).length;
+    this.getAllTags();
+  }
+
+  getAllTags() {
+    this.dbService.getAllTags().then(tags => {
+      this.allTags = tags;
+    });
   }
 
   getAllLists() {
-    let te = new TodoList;
-    let item = new ListItem;
-    item = { id: 1, text: "test", isReady: true };
-    let item2 = new ListItem;
-    item2 = { id: 2, text: "testffffffffffffffff", isReady: false };
-    let item3 = new ListItem;
-    item3 = { id: 3, text: "t", isReady: true };
-    let test = [item, item2, item3, item2, item, item2, item];
-
-    te = {
-      name: "TEST",
-      isFavorite: true,
-      date: new Date(),
-      tag: "work",
-      readyPer: 80,
-      list: test
-    }
-
-    this.todoList.push(te);
-
-    te = {
-      name: "TEST2000000000000000",
-      isFavorite: false,
-      date: new Date(),
-      tag: "home",
-      readyPer: 20,
-      list: test
-    }
-
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
-    this.todoList.push(te);
+    this.isLoading = true;
+    this.dbService.getAllTodoLists().then(list => {
+      this.todoList = list;
+      this.filteredTodoList = list;
+      this.favoriteCount = this.todoList.filter(p => p.isFavorite === true).length;
+      this.isLoading = false;
+    });
   }
 
   filterByTag(selectedTag: string) {
     this.selectedTag = selectedTag;
-    this.filteredTodoList = this.getCurrList().filter(p => p.tag === selectedTag);
+    this.filteredTodoList = this.getCurrList().filter(p => p.tag.tagName === selectedTag);
     console.info(`Выполнена фильтрация по тегу "${selectedTag}".`);
   }
 
   filterByName() {
-    this.filteredTodoList = this.getCurrList().filter(p => p.name.toLowerCase() === this.nameToFind.toLowerCase());
+    this.filteredTodoList = this.todoList.filter(p => p.name.toLowerCase().includes(this.nameToFind.toLowerCase()));
     console.info(`Выполнен поиск по имени "${this.nameToFind}".`);
   }
 
@@ -102,6 +89,18 @@ export class HomeComponent {
   }
 
   addNewTag() {
+    let sameTag = this.allTags.filter(p => p.tagName.toLowerCase().trim() === this.newTag.toLowerCase().trim());
 
+    if (sameTag.length === 0) {
+      this.isTagError = false;
+      this.dbService.addTag(this.newTag, this.newTagColor);
+      this.getAllTags();
+      this.addTag.close();
+    }
+    else
+      this.isTagError = true;
+
+    this.newTag = "";
+    this.newTagColor = "";
   }
 }

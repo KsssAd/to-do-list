@@ -15,7 +15,7 @@
     </li>
     <li class="navbar-item">
       <i class="fa-solid fa-user me-1 big-neumorph-icon"></i>
-      <span class="title-text me-3">login_name</span>
+      <span class="title-text me-3">{{userName}}</span>
       <button class="neumorph-btn sm-neumorph-btn" (click)="router.navigateByUrl('/login')">Выход</button>
     </li>
   </ul>
@@ -37,11 +37,11 @@
       <a class="nav-link title-text" routerLink="/favorite" title="Избранное"><i class="fa-solid fa-heart big-neumorph-icon"></i></a>
     </div>
     <hr/>
-    <div class="v-navbar-item">
-      <span class="title-text v-user-name">login_name</span>
+    <div class="v-navbar-item" style="height: 25vh; justify-content: space-between;">
       <button class="neumorph-btn sm-neumorph-btn" title="Выход" (click)="router.navigateByUrl('/login')">
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
+      <label class="title-text v-user-name">{{userName}}</label>
     </div>
   </div>
 </div>

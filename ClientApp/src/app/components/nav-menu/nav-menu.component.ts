@@ -11,13 +11,16 @@ export class NavMenuComponent {
   isExpanded: boolean = false;
   windowWidth: number = window.innerWidth;
   opened: boolean = false;
+  userName: string;
 
   @Output() toggle = new EventEmitter<boolean>();
 
   constructor(
     public authService: AuthService,
     public router: Router,
-  ) { }
+  ) {
+    this.userName = this.authService.currentUser;
+  }
 
   collapse() {
     this.isExpanded = false;

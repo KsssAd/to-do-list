@@ -12,6 +12,7 @@
   align-items: center;
   box-shadow: var(--inset-shadow-default);
   padding-inline: 0.5em;
+  transition: 4s;
 }
 
 .list-card-header {

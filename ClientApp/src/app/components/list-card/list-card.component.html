@@ -18,7 +18,7 @@
 <div class="list-card-header">
   <i [ngClass]="todoList.isFavorite ? 'fa-solid fa-heart fa-beat big-neumorph-icon' : ''"></i>
   <label class="title-text">{{todoList.name}}</label>
-  <i (click)="closeForm()" class="fa-solid fa-xmark close-icon"></i>
+  <i (click)="this.close.emit()" class="fa-solid fa-xmark close-icon"></i>
 </div>
 
 <hr />
@@ -30,15 +30,14 @@
     <i class="fa-solid fa-calendar ms-1"></i>
   </label>
   <label class="title-text">
-    <i class="fa-solid fa-tag me-1"></i>
-    <label class="simple-text">{{todoList.tag}}</label>
+    <label class="simple-text"><i class="fa-solid fa-tag me-2" [style.color]="todoList.tag.color" style="opacity: 0.7;"></i>{{todoList.tag.tagName}}</label>
   </label>
 </div>
 
 <div class="list">
   <div *ngFor="let item of todoList.list" class="neumorph-list-card">
     <div class="d-flex align-items-center">
-      <input type="checkbox" [(ngModel)]="item.isReady" class="neumorph-input" />
+      <input type="checkbox" [(ngModel)]="item.isReady" (change)="markAsReady(item)" class="neumorph-input" />
       <label [ngClass]="item.isReady ? 'crossed-simple-text' : 'simple-text'">{{item.text}}</label>
     </div>
   </div>

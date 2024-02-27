@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ListItem, TodoList } from '../../models/to-do-list.model';
+import { GeneralFunctionsService } from '../../services/general-functions.service';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'list-card',
@@ -7,25 +9,23 @@ import { ListItem, TodoList } from '../../models/to-do-list.model';
   styleUrls: ['./list-card.component.css']
 })
 export class ListCardComponent {
-  @Input() public todoList: TodoList = new TodoList
+  @Input() public todoList: TodoList = new TodoList();
+
   @Output() close: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
+  constructor(
+    private dbService: DbService,
+    private gFuncService: GeneralFunctionsService,
+  ) { }
 
-  }
-
-  public closeForm() {
-    this.close.emit(); 
-  }
-
-  changeCheckbox(item: ListItem) {
-   
+  markAsReady(item: ListItem) {
+    this.todoList.readyPer = this.gFuncService.calcPerReady(this.todoList);
+    this.dbService.checkReady(item);
+    this.dbService.editReadyPer(this.todoList);
   }
 
   deleteList() {
-
-    //TODO !!!!!!!!!!!!!!!!!!
-
-    this.closeForm();
+    this.dbService.deleteList(this.todoList.id);
+    this.close.emit(); 
   }
 }
