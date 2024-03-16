@@ -88,7 +88,7 @@ export class DbService {
         color: list.tag.color,
       },
       readyPer: list.readyPer,
-    });
+    }); 
   }
 
   //Получить информацию о списке дел

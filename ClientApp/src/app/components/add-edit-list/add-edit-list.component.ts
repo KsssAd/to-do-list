@@ -72,12 +72,16 @@ export class AddEditListComponent {
     newItem.text = this.newItemText;
     this.todoList.list.push(newItem);
     this.newItemText = "";
+    if (this.isEdit) {
+      this.dbService.addNewItem(newItem, this.todoList.id);
+    }
   }
 
   deleteItem(id: string) {
     this.dbService.deleteItem(id);
     let index = this.todoList.list.findIndex(p => p.id === id);
     this.todoList.list.splice(index, 1);
+    this.dbService.deleteItem(id);
   }
 
   isValid(): boolean {
